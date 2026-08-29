@@ -20,7 +20,7 @@ type Point2D =
 
     override this.GetHashCode() : int = this.Length().GetHashCode()
 
-    interface System.IComparable with
+    interface IComparable with
         member this.CompareTo(obj: obj) : int =
             match obj with
             | :? Point2D as p ->
@@ -57,7 +57,7 @@ type Point3D =
 
     override this.GetHashCode() : int = this.Length().GetHashCode()
 
-    interface System.IComparable with
+    interface IComparable with
         member this.CompareTo(obj: obj) : int =
             match obj with
             | :? Point2D as p -> raise (ArgumentException "type p must be Point3D but Point2D")
