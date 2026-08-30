@@ -1,8 +1,9 @@
-#load "../Shared/ReactiveType.fsx"
 #load "./Dep.fsx"
+#load "./ReactiveContext.fsx"
 
 open ReactiveTypes
 open Dep
+open ReactiveContext
 
 module Effect =
     type ReactiveEffect(fn: unit -> unit, ?scheduler: unit -> unit) =
@@ -36,17 +37,16 @@ module Effect =
                 fn ()
             else
                 this.Cleanup()
-
-                // TODO:
-                // activeEffect <- this
+                let previousEffect = ReactiveContext.activeEffect
+                let currentEffect = this :> IReactiveEffect
+                ReactiveContext.activeEffect <- Some currentEffect
 
                 try
                     running <- running + 1
                     fn ()
                 finally
                     running <- running - 1
-        // TODO:
-        // restore activeEffect
+                    ReactiveContext.activeEffect <- previousEffect
 
         member this.Cleanup() =
             let effect = this :> IReactiveEffect
@@ -62,6 +62,12 @@ module Effect =
                 active <- false
 
         interface IReactiveEffect with
+            member this.AddDep(dep: obj) = this.AddDep(dep :?> Dep.Dep)
+
+            member _.Running = running
+
+            member _.Scheduler = scheduler
+
             member this.Run() = this.Run()
 
             member this.Stop() = this.Stop()
