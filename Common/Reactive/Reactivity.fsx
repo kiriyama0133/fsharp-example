@@ -2,11 +2,17 @@
 
 module Reactive =
     open System.Collections.Generic
+    open ReactiveTypes
     open Tracking.Tracking
 
     type ReactiveObject(target: obj) =
 
         member _.Raw = target
+
+        member _.PropertyNames =
+            target.GetType().GetProperties()
+            |> Seq.filter (fun property -> property.CanRead)
+            |> Seq.map (fun property -> property.Name)
 
         member _.Get(key: string) : obj =
             Track target key
@@ -32,6 +38,12 @@ module Reactive =
             property.SetValue(target, value)
             Trigger target key
 
+        interface IReactiveObject with
+            member this.Raw = this.Raw
+            member this.GetValue(key: string) = this.Get(key)
+            member this.SetValue(key: string, value: obj) = this.Set(key, value)
+            member this.PropertyNames = this.PropertyNames
+
     type ReactiveMap() =
         let reactives = Dictionary<obj, ReactiveObject>()
 
@@ -50,3 +62,24 @@ module Reactive =
                 let reactive = ReactiveObject(target)
                 reactives.Add(target, reactive)
                 reactive
+
+    let reactiveMap = ReactiveMap()
+
+    let reactive (target: obj) : IReactiveObject =
+        reactiveMap.GetOrCreate(target) :> IReactiveObject
+
+    let isReactive (value: obj) =
+        match value with
+        | :? IReactiveObject -> true
+        | _ -> false
+
+    let toReactive (value: obj) =
+        if isNull value then
+            null
+        else
+            let valueType = value.GetType()
+
+            if valueType.IsClass && valueType <> typeof<string> then
+                reactiveMap.GetOrCreate(value) :> obj
+            else
+                value
