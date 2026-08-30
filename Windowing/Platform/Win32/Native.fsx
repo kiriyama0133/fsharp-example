@@ -26,6 +26,12 @@ module Win32Native =
     extern ATOM RegisterClassExW(WNDCLASSEXW& lpwcx)
 
     [<DllImport(User32, CharSet = CharSet.Unicode, SetLastError = true)>]
+    extern BOOL SetWindowTextW(HWND hWnd, string lpString)
+
+    [<DllImport(User32, CharSet = CharSet.Unicode, SetLastError = true)>]
+    extern BOOL UnregisterClassW(string lpClassName, HINSTANCE hInstance)
+
+    [<DllImport(User32, CharSet = CharSet.Unicode, SetLastError = true)>]
     extern HWND CreateWindowExW(
         DWORD dwExStyle,
         string lpClassName,
