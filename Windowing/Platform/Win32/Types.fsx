@@ -3,6 +3,8 @@ module Win32Types
 open System
 open System.Runtime.InteropServices
 
+
+
 type HWND = nativeint
 type HINSTANCE = nativeint
 type HCURSOR = nativeint
@@ -19,6 +21,15 @@ type WORD = uint16 // 16 bit unsigned int
 type BOOL = int32 // 32 bit int
 type LONG = int32 // 32 bit int
 type ATOM = uint16 // 16bit unsigned int
+
+[<Literal>]
+let WM_CLOSE: UINT = 0x0010u
+
+[<Literal>]
+let WM_DESTROY: UINT = 0x0002u
+
+[<Literal>]
+let WM_NCCREATE: UINT = 0x0081u
 
 type WndProc = delegate of HWND * UINT * WPARAM * LPARAM -> LRESULT
 

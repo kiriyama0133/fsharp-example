@@ -108,16 +108,34 @@ module WindowTypes =
           Handled = false
           Cancel = false }
 
-    let defaultWindowStyle : WindowStyle =
+    let defaultWindowStyle: WindowStyle =
         { Resizable = true
           Borderless = false
           Topmost = false
           Transparent = false
           AcceptsInput = true }
 
-    let defaultPointerPosition : PointerPosition = { X = 0.0; Y = 0.0 }
+    let defaultPointerPosition: PointerPosition = { X = 0.0; Y = 0.0 }
 
-    let defaultPointerState : PointerState =
+    let defaultPointerState: PointerState =
         { Position = defaultPointerPosition
           IsInside = false
           CapturedBy = None }
+
+    [<Literal>]
+    let WS_OVERLAPPED = 0x00000000u
+
+    [<Literal>]
+    let WS_CAPTION = 0x00C00000u
+
+    [<Literal>]
+    let WS_SYSMENU = 0x00080000u
+
+    [<Literal>]
+    let WS_THICKFRAME = 0x00040000u
+
+    [<Literal>]
+    let WS_MINIMIZEBOX = 0x00020000u
+
+    [<Literal>]
+    let WS_MAXIMIZEBOX = 0x00010000u

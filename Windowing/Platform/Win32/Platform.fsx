@@ -1,5 +1,6 @@
 #load "./Native.fsx"
 #load "../../Types.fsx"
+#load "../../Window.fsx"
 #load "./WindowClass.fsx"
 
 open System
@@ -10,10 +11,13 @@ open System.Collections.Generic
 module Win32Platform =
     open Win32Types
     open Types.WindowTypes
+    open Window
     open Native.Win32Native
     open System.Runtime.InteropServices
 
+
     let private windowIds = Dictionary<HWND, WindowId>()
+    let private windows = Dictionary<HWND, Window.Window>()
     let private nextWindowId = ref 0
     let private nullWindow: HWND = Native.Win32Native.nullHandle
 
@@ -22,9 +26,9 @@ module Win32Platform =
         nextWindowId.Value <- id + 1
         WindowId id
 
-    let private registerWindow hwnd =
-        let windowId = allocateWindowId ()
+    let private registerWindow hwnd (windowId: WindowId) (window: Window.Window) =
         windowIds.[hwnd] <- windowId
+        windows.[hwnd] <- window
         windowId
 
     let private tryGetWindowId hwnd =
@@ -32,29 +36,18 @@ module Win32Platform =
         | true, windowId -> Some windowId
         | false, _ -> None
 
-    let private unregisterWindow hwnd = windowIds.Remove(hwnd) |> ignore
+    let private unregisterWindow hwnd =
+        windowIds.Remove(hwnd) |> ignore
+        windows.Remove(hwnd) |> ignore
+
+    let private tryGetWindow hwnd =
+        match windows.TryGetValue hwnd with
+        | true, window -> Some window
+        | false, _ -> None
 
     let private ensureWindow (handle: HWND) apiName =
         if handle = nullWindow then
             raise (Win32Exception(System.Runtime.InteropServices.Marshal.GetLastWin32Error(), apiName + " failed."))
-
-    [<Literal>]
-    let private WS_OVERLAPPED = 0x00000000u
-
-    [<Literal>]
-    let private WS_CAPTION = 0x00C00000u
-
-    [<Literal>]
-    let private WS_SYSMENU = 0x00080000u
-
-    [<Literal>]
-    let private WS_THICKFRAME = 0x00040000u
-
-    [<Literal>]
-    let private WS_MINIMIZEBOX = 0x00020000u
-
-    [<Literal>]
-    let private WS_MAXIMIZEBOX = 0x00010000u
 
     let private WS_OVERLAPPEDWINDOW =
         WS_OVERLAPPED
@@ -86,6 +79,7 @@ module Win32Platform =
         let windowId = allocateWindowId ()
         let (WindowId id) = windowId
         let paramValue = nativeint id
+        let window = Window.Window(windowId, title, { X = float x; Y = float y; Width = float width; Height = float height })
 
         let hwnd: HWND =
             Native.Win32Native.CreateWindowExW(
@@ -104,7 +98,7 @@ module Win32Platform =
             )
 
         ensureWindow hwnd "CreateWindowExW"
-        registerWindow hwnd |> ignore
+        registerWindow hwnd windowId window |> ignore
         hwnd
 
     let destroyWindow (hwnd: HWND) =
@@ -151,4 +145,120 @@ module Win32Platform =
                 TranslateMessage(&msg) |> ignore
                 DispatchMessageW(&msg) |> ignore
 
-    let private dispatchWindowMessage (message: WindowMessage) = printfn "%A" message
+    let private dispatchWindowMessage (hwnd: HWND) (message: WindowMessage) =
+        match message with
+        | Window(context, eventValue) ->
+            match tryGetWindow hwnd with
+            | None -> None
+            | Some window ->
+                match eventValue with
+                | Shown ->
+                    window.Show()
+                    Some context
+                | Hidden ->
+                    window.Hide()
+                    Some context
+                | CloseRequested ->
+                    let closeContext = window.RequestClose()
+                    Some closeContext
+                | Closed ->
+                    window.Close()
+                    Some context
+                | Activated ->
+                    window.Activate()
+                    Some context
+                | Deactivated ->
+                    window.Deactivate()
+                    Some context
+                | FocusGained ->
+                    window.SetFocused()
+                    Some context
+                | FocusLost ->
+                    window.SetUnfocused()
+                    Some context
+                | TitleChanged title ->
+                    window.SetTitle title
+                    Some context
+                | StyleChanged style ->
+                    window.SetStyle style
+                    Some context
+                | WindowEvent.Moved bounds
+                | WindowEvent.Resized bounds ->
+                    window.SetBounds bounds
+                    Some context
+        | Pointer(kind, event) ->
+            match tryGetWindow hwnd with
+            | None -> None
+            | Some window ->
+                match kind with
+                | PointerEventKind.Entered ->
+                    window.EnterPointer(event.PointerId, event.Position)
+                | PointerEventKind.Exited ->
+                    window.LeavePointer(event.PointerId, event.Position)
+                | PointerEventKind.Moved ->
+                    window.MovePointer(event.PointerId, event.Position)
+                | PointerEventKind.Pressed ->
+                    match event.Button with
+                    | Some button -> window.PressPointer(event.PointerId, button, event.Position)
+                    | None -> ()
+                | PointerEventKind.Released ->
+                    match event.Button with
+                    | Some button -> window.ReleasePointer(event.PointerId, button, event.Position)
+                    | None -> ()
+                | PointerEventKind.Wheel ->
+                    match event.Delta with
+                    | Some delta -> window.ScrollPointer(event.PointerId, event.Position, delta)
+                    | None -> ()
+
+                Some event.Context
+        | Keyboard(kind, event) ->
+            match tryGetWindow hwnd with
+            | None -> None
+            | Some window ->
+                match kind with
+                | KeyDown ->
+                    match event.Key with
+                    | Some key -> window.RaiseKeyDown(key, event.Ctrl, event.Shift, event.Alt)
+                    | None -> ()
+                | KeyUp ->
+                    match event.Key with
+                    | Some key -> window.RaiseKeyUp(key, event.Ctrl, event.Shift, event.Alt)
+                    | None -> ()
+                | TextInput ->
+                    match event.Text with
+                    | Some text -> window.RaiseTextInput text
+                    | None -> ()
+
+                Some event.Context
+
+    let private handleClose (hwnd: HWND) =
+        match tryGetWindowId hwnd with
+        | None -> DefWindowProcW(hwnd, WM_CLOSE, 0un, 0n)
+
+        | Some windowId ->
+            let context = createEventContext windowId
+
+            let message = WindowMessage.Window(context, CloseRequested)
+
+            let dispatchedContext =
+                dispatchWindowMessage hwnd message
+
+            let effectiveContext = defaultArg dispatchedContext context
+
+            if not effectiveContext.Cancel then
+                DestroyWindow hwnd |> ignore
+
+            0n
+
+    let private handleDestroy (hwnd: HWND) =
+        match tryGetWindowId hwnd with
+        | None -> 0n
+        | Some windowId ->
+            let context = createEventContext windowId
+            let message = WindowMessage.Window(context, Closed)
+            dispatchWindowMessage hwnd message |> ignore
+            unregisterWindow hwnd
+
+            PostQuitMessage(0)
+
+            0n
