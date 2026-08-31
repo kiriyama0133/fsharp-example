@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Shared\ReactiveType.fs" />
+    <Compile Include="Common\Dep.fs" />
+    <Compile Include="Common\ReactiveContext.fs" />
+    <Compile Include="Common\Effect.fs" />
+    <Compile Include="Common\Reactive\Core.fs" />
+    <Compile Include="Common\Reactive\TargetMap.fs" />
+    <Compile Include="Common\Reactive\Tracking.fs" />
+    <Compile Include="Common\Reactive\Reactive.fs" />
+    <Compile Include="Common\Ref.fs" />
+    <Compile Include="Common\Watch.fs" />
+    <Compile Include="Common\Logger.fs" />
+    <Compile Include="Common\ProxyHelpers.fs" />
+    <Compile Include="Models\Math\Vec.fs" />
+    <Compile Include="Graphics\GraphicsTypes.fs" />
+    <Compile Include="Windowing\WindowTypes.fs" />
+    <Compile Include="Windowing\Window.fs" />
+    <Compile Include="Windowing\Platform\Win32\Win32Types.fs" />
+    <Compile Include="Windowing\Platform\Win32\Win32Native.fs" />
+    <Compile Include="Windowing\Platform\Win32\Win32WindowClass.fs" />
+    <Compile Include="Windowing\Platform\Win32\Win32Backend.fs" />
+    <Compile Include="Windowing\Platform.fs" />
+    <Compile Include="Windowing\WindowManager.fs" />
+    <Compile Include="Runtime\RuntimeTypes.fs" />
+    <Compile Include="Runtime\RuntimeVNode.fs" />
+    <Compile Include="Runtime\RuntimeScheduler.fs" />
+    <Compile Include="Runtime\RuntimeComponent.fs" />
+    <Compile Include="Runtime\RuntimeRenderer.fs" />
+    <Compile Include="Utils\Object.fs" />
+    <Compile Include="Utils\MessageBox.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="4.151.1" />
+  </ItemGroup>
+</Project>
