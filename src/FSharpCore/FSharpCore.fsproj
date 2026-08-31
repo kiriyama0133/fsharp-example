@@ -20,6 +20,7 @@
     <Compile Include="Common\ProxyHelpers.fs" />
     <Compile Include="Models\Math\Vec.fs" />
     <Compile Include="Graphics\GraphicsTypes.fs" />
+    <Compile Include="Graphics\Skia\Canvas.fs" />
     <Compile Include="Windowing\WindowTypes.fs" />
     <Compile Include="Windowing\Window.fs" />
     <Compile Include="Windowing\Platform\Win32\Win32Types.fs" />
