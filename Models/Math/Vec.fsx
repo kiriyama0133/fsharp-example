@@ -13,9 +13,9 @@ type Point2D =
     member this.Length() =
         sqrt (this.x * this.x + this.y * this.y)
 
-    override this.Equals(obj: obj) : bool =
+    override this.Equals(obj: obj) =
         match obj with
-        | :? Point2D as p -> this.Length() = p.Length()
+        | :? Point2D as p -> this.x = p.x && this.y = p.y
         | _ -> false
 
     override this.GetHashCode() : int = this.Length().GetHashCode()
