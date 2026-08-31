@@ -46,6 +46,13 @@ module WindowTypes =
           Transparent: bool
           AcceptsInput: bool }
 
+    type WindowCreateOptions =
+        { ClassName: string
+          Title: string
+          Bounds: WindowBounds
+          Style: WindowStyle
+          IsVisible: bool }
+
     type PointerPosition = { X: float; Y: float }
 
     type PointerDelta = { X: float; Y: float }
@@ -89,6 +96,14 @@ module WindowTypes =
           Button: PointerButton option
           Delta: PointerDelta option }
 
+    type PlatformKind =
+        | Windows
+        | Linux
+        | MacOS
+        | Unkown
+
+    // type WindowPlatform = Win32Window of hwnd: nativeint
+
     type KeyboardEvent =
         { Context: EventContext
           Key: string option
@@ -115,27 +130,16 @@ module WindowTypes =
           Transparent = false
           AcceptsInput = true }
 
+    let defaultWindowCreateOptions className title bounds : WindowCreateOptions =
+        { ClassName = className
+          Title = title
+          Bounds = bounds
+          Style = defaultWindowStyle
+          IsVisible = false }
+
     let defaultPointerPosition: PointerPosition = { X = 0.0; Y = 0.0 }
 
     let defaultPointerState: PointerState =
         { Position = defaultPointerPosition
           IsInside = false
           CapturedBy = None }
-
-    [<Literal>]
-    let WS_OVERLAPPED = 0x00000000u
-
-    [<Literal>]
-    let WS_CAPTION = 0x00C00000u
-
-    [<Literal>]
-    let WS_SYSMENU = 0x00080000u
-
-    [<Literal>]
-    let WS_THICKFRAME = 0x00040000u
-
-    [<Literal>]
-    let WS_MINIMIZEBOX = 0x00020000u
-
-    [<Literal>]
-    let WS_MAXIMIZEBOX = 0x00010000u

@@ -66,6 +66,9 @@ module Win32Native =
     extern BOOL GetClientRect(HWND hWnd, RECT& lpRect)
 
     [<DllImport(User32, SetLastError = true)>]
+    extern BOOL GetWindowRect(HWND hWnd, RECT& lpRect)
+
+    [<DllImport(User32, SetLastError = true)>]
     extern BOOL AdjustWindowRectEx(RECT& lpRect, DWORD dwStyle, BOOL bMenu, DWORD dwExStyle)
 
     [<DllImport(User32, SetLastError = true)>]
@@ -106,6 +109,9 @@ module Win32Native =
 
     [<DllImport(User32, SetLastError = true)>]
     extern BOOL ScreenToClient(HWND hWnd, POINT& lpPoint)
+
+    [<DllImport(User32, SetLastError = true)>]
+    extern int16 GetKeyState(int nVirtKey)
 
     [<DllImport(User32, EntryPoint = "GetWindowLongPtrW", SetLastError = true)>]
     extern nativeint GetWindowLongPtrW(HWND hWnd, int nIndex)
