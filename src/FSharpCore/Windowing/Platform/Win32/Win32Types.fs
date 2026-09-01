@@ -22,6 +22,7 @@ type WORD = uint16 // 16 bit unsigned int
 type BOOL = int32 // 32 bit int
 type LONG = int32 // 32 bit int
 type ATOM = uint16 // 16bit unsigned int
+type HGLRC = nativeint
 
 [<Literal>]
 let WM_CLOSE: UINT = 0x0010u
@@ -140,6 +141,21 @@ let WS_EX_TOPMOST: DWORD = 0x00000008u
 [<Literal>]
 let WS_EX_TRANSPARENT: DWORD = 0x00000020u
 
+[<Literal>]
+let PFD_DRAW_TO_WINDOW = 0x00000004u
+
+[<Literal>]
+let PFD_SUPPORT_OPENGL = 0x00000020u
+
+[<Literal>]
+let PFD_DOUBLEBUFFER = 0x00000001u
+
+[<Literal>]
+let PFD_TYPE_RGBA = 0uy
+
+[<Literal>]
+let PFD_MAIN_PLANE = 0uy
+
 type WndProc = delegate of HWND * UINT * WPARAM * LPARAM -> LRESULT
 
 [<Struct; StructLayout(LayoutKind.Sequential)>]
@@ -197,35 +213,33 @@ type WNDCLASSEXW =
 
 [<Struct; StructLayout(LayoutKind.Sequential)>]
 type PIXELFORMATDESCRIPTOR =
-    {
-        nSize: uint16
-        nVersion: uint16
-        dwFlags: uint32
-        iPixelType: byte
+    { nSize: uint16
+      nVersion: uint16
+      dwFlags: uint32
+      iPixelType: byte
 
-        cColorBits: byte
-        cRedBits: byte
-        cRedShift: byte
-        cGreenBits: byte
-        cGreenShift: byte
-        cBlueBits: byte
-        cBlueShift: byte
-        cAlphaBits: byte
-        cAlphaShift: byte
+      cColorBits: byte
+      cRedBits: byte
+      cRedShift: byte
+      cGreenBits: byte
+      cGreenShift: byte
+      cBlueBits: byte
+      cBlueShift: byte
+      cAlphaBits: byte
+      cAlphaShift: byte
 
-        cAccumBits: byte
-        cAccumRedBits: byte
-        cAccumGreenBits: byte
-        cAccumBlueBits: byte
-        cAccumAlphaBits: byte
+      cAccumBits: byte
+      cAccumRedBits: byte
+      cAccumGreenBits: byte
+      cAccumBlueBits: byte
+      cAccumAlphaBits: byte
 
-        cDepthBits: byte
-        cStencilBits: byte
-        cAuxBuffers: byte
-        iLayerType: byte
-        bReserved: byte
+      cDepthBits: byte
+      cStencilBits: byte
+      cAuxBuffers: byte
+      iLayerType: byte
+      bReserved: byte
 
-        dwLayerMask: uint32
-        dwVisibleMask: uint32
-        dwDamageMask: uint32
-    }
+      dwLayerMask: uint32
+      dwVisibleMask: uint32
+      dwDamageMask: uint32 }

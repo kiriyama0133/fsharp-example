@@ -553,3 +553,48 @@ open System.Collections.Generic
         let hdc = GetDC(hwnd)
         ensureNonZeroHandle hdc "GetDC"
         hdc
+
+    let SetPixelFormat (hdc: HDC, pixelFormatDescriptor: PIXELFORMATDESCRIPTOR): unit =
+        let mutable pfd = pixelFormatDescriptor
+
+        let pixelFormat =
+            ChoosePixelFormat(hdc, &pfd)
+
+        if pixelFormat = 0 then
+            raise (
+                Win32Exception(
+                    Marshal.GetLastWin32Error(),
+                    "ChoosePixelFormat failed."
+                )
+            )
+
+        let result =
+            SetPixelFormat(hdc, pixelFormat, &pfd)
+
+        if not result then
+            raise (
+                Win32Exception(
+                    Marshal.GetLastWin32Error(),
+                    "SetPixelFormat failed."
+                )
+            )
+    let makeCurrent (hdc: HDC) (hglrc: HGLRC) =
+        if not (wglMakeCurrent(hdc, hglrc)) then
+            raise (
+                Win32Exception(
+                    Marshal.GetLastWin32Error(),
+                    "wglMakeCurrent failed."
+                )
+            )
+    let createOpenGLContext (hdc: HDC): HGLRC =
+        let hglrc = wglCreateContext(hdc)
+
+        if hglrc = 0n then
+            raise (
+                Win32Exception(
+                    Marshal.GetLastWin32Error(),
+                    "wglCreateContext failed."
+                )
+            )
+
+        hglrc

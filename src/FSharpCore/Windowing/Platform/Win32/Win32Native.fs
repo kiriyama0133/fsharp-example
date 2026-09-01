@@ -126,6 +126,15 @@ extern int ChoosePixelFormat(HDC hdc, PIXELFORMATDESCRIPTOR& ppfd)
 [<DllImport("gdi32.dll", SetLastError = true)>]
 extern bool SetPixelFormat(HDC hdc, int format, PIXELFORMATDESCRIPTOR& ppfd)
 
+[<DllImport("opengl32.dll", SetLastError = true)>]
+extern nativeint wglCreateContext(nativeint hdc)
+
+[<DllImport("opengl32.dll", SetLastError = true)>]
+extern bool wglMakeCurrent(nativeint hdc, nativeint hglrc)
+
+[<DllImport("opengl32.dll", SetLastError = true)>]
+extern bool wglDeleteContext(nativeint hglrc)
+
 let lowWord (value: unativeint) = int (uint32 value &&& 0xFFFFu)
 
 let highWord (value: unativeint) = int ((uint32 value >>> 16) &&& 0xFFFFu)

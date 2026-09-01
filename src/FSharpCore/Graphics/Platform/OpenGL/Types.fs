@@ -6,10 +6,10 @@ type OpenGLContext =
     {
         MakeCurrent: unit -> unit
         SwapBuffers: unit -> unit
-        GetProcAddress: string -> nativeint
+        Dispose: unit -> unit
     }
 type PlatformKind =
     | Windows
     | Linux
     | MacOS
-    | Unkown
+    | Unknown
