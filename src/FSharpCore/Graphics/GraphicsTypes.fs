@@ -18,12 +18,12 @@ type FontId = FontId of int
 
 type Image = { Id: ImageId; Size: Size }
 type Brush = SolidColor of Color
-type Sroke = { Color: Color; Width: float }
+type Stroke = { Color: Color; Width: float }
 
 type Canvas =
     { Clear: Color -> unit
       DrawRect: Rect -> uint
-      DrawLine: Point2D -> Point2D -> Sroke -> unit
+      DrawLine: Point2D -> Point2D -> Stroke -> unit
       DrawImage: Image -> Rect -> unit }
 
 

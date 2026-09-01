@@ -1,4 +1,4 @@
-module Graphics.Skia.Canvas
+module SkiaCanvas
 
 open GraphicsTypes
 open Vec

@@ -16,6 +16,10 @@ open System.Collections.Generic
     let private nullWindow: HWND = Win32Native.nullHandle
     let private mousePointerId = PointerId 0
 
+    let private ensureNonZeroHandle handle apiName =
+        if handle = nullHandle then
+            raise (Win32Exception(Marshal.GetLastWin32Error(), apiName + " failed."))
+
     let private allocateWindowId () =
         let id = nextWindowId.Value
         nextWindowId.Value <- id + 1
@@ -544,3 +548,8 @@ open System.Collections.Generic
             showWindow hwnd
 
         hwnd
+
+    let TryGetHdcUsingHwnd (hwnd: HWND): HDC  =
+        let hdc = GetDC(hwnd)
+        ensureNonZeroHandle hdc "GetDC"
+        hdc

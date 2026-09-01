@@ -6,6 +6,7 @@ open System.Runtime.InteropServices
 
 
 type HWND = nativeint
+type HDC = nativeint
 type HINSTANCE = nativeint
 type HCURSOR = nativeint
 type HICON = nativeint
@@ -193,3 +194,38 @@ type WNDCLASSEXW =
     val mutable lpszClassName: string
 
     val mutable hIconSm: HICON
+
+[<Struct; StructLayout(LayoutKind.Sequential)>]
+type PIXELFORMATDESCRIPTOR =
+    {
+        nSize: uint16
+        nVersion: uint16
+        dwFlags: uint32
+        iPixelType: byte
+
+        cColorBits: byte
+        cRedBits: byte
+        cRedShift: byte
+        cGreenBits: byte
+        cGreenShift: byte
+        cBlueBits: byte
+        cBlueShift: byte
+        cAlphaBits: byte
+        cAlphaShift: byte
+
+        cAccumBits: byte
+        cAccumRedBits: byte
+        cAccumGreenBits: byte
+        cAccumBlueBits: byte
+        cAccumAlphaBits: byte
+
+        cDepthBits: byte
+        cStencilBits: byte
+        cAuxBuffers: byte
+        iLayerType: byte
+        bReserved: byte
+
+        dwLayerMask: uint32
+        dwVisibleMask: uint32
+        dwDamageMask: uint32
+    }

@@ -29,6 +29,8 @@
     <Compile Include="Windowing\Platform\Win32\Win32Backend.fs" />
     <Compile Include="Windowing\Platform.fs" />
     <Compile Include="Windowing\WindowManager.fs" />
+    <Compile Include="Graphics\Platform\OpenGL\Types.fs" />
+    <Compile Include="Graphics\Platform\OpenGL\Context.fs" />
     <Compile Include="Runtime\RuntimeTypes.fs" />
     <Compile Include="Runtime\RuntimeVNode.fs" />
     <Compile Include="Runtime\RuntimeScheduler.fs" />
@@ -38,6 +40,8 @@
     <Compile Include="Utils\MessageBox.fs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Silk.NET.OpenGL" Version="2.23.0" />
+    <PackageReference Include="Silk.NET.WGL" Version="2.23.0" />
     <PackageReference Include="SkiaSharp" Version="4.151.1" />
   </ItemGroup>
 </Project>

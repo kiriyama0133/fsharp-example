@@ -1,0 +1,10 @@
+F:\fsharp\artifacts\bin\FSharpCore\Debug\net8.0-windows\FSharpCore.deps.json
+F:\fsharp\artifacts\bin\FSharpCore\Debug\net8.0-windows\FSharpCore.dll
+F:\fsharp\artifacts\bin\FSharpCore\Debug\net8.0-windows\FSharpCore.pdb
+F:\fsharp\artifacts\obj\FSharpCore\Debug\net8.0-windows\FSharpCore.fsproj.AssemblyReference.cache
+F:\fsharp\artifacts\obj\FSharpCore\Debug\net8.0-windows\FSharpCore.fsproj.CoreCompileInputs.cache
+F:\fsharp\artifacts\obj\FSharpCore\Debug\net8.0-windows\FSharpCore.sourcelink.json
+F:\fsharp\artifacts\obj\FSharpCore\Debug\net8.0-windows\FSharpCore.dll
+F:\fsharp\artifacts\obj\FSharpCore\Debug\net8.0-windows\refint\FSharpCore.dll
+F:\fsharp\artifacts\obj\FSharpCore\Debug\net8.0-windows\FSharpCore.pdb
+F:\fsharp\artifacts\obj\FSharpCore\Debug\net8.0-windows\ref\FSharpCore.dll
