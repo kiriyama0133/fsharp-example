@@ -2,7 +2,8 @@ module Program
 
 open WindowTypes
 open WindowManager
-open Win32Platform
+open OpenGLResources
+open Silk.NET.OpenGL
 
 [<EntryPoint>]
 let main _ =
@@ -38,13 +39,24 @@ let main _ =
     //     printfn "focused window changed: %A" focusedWindowId)
 
     let window = manager.CreateWindow options
+    let context = OpenGLContext.CreateContext window
+    let device = OpenGLDevice.CreateGraphicsDevice context
+    let vertexBuffer = device.CreateBuffer { Size = 1024UL; Usage = Static }
 
-    let hwnd = manager.TryGetNativeHandle window.Id
+    let shader =
+        device.CreateWindowShader
+            { Width = int (window.GetBounds().Width)
+              Height = int (window.GetBounds().Height) }
 
-    match hwnd with
-    | Some(Win32Hwnd handle) -> TryGetHdcUsingHwnd handle |> printfn "HDC for window %A: %A" window.Id
-    | None -> printfn "No native handle available for window %A" window.Id
+    let renderFrame () =
+        device.MakeCurrent()
+        device.SetClearColor(0.1f, 0.2f, 0.3f, 1.0f)
+        device.Clear [ ClearBuffer.ColorBuffer; ClearBuffer.DepthBuffer ]
+        shader.Use()
+        vertexBuffer.Bind()
+        device.SwapBuffers()
 
+    renderFrame ()
 
     // window.WindowEvents.Add(fun (_, eventValue) -> printfn "window event: %A" eventValue)
 
@@ -57,9 +69,6 @@ let main _ =
 
     // window.PointerEvents.Add(fun (kind, eventValue) ->
     //     printfn "Pointer %A: X=%f, Y=%f" kind eventValue.Position.X eventValue.Position.Y)
-
-    printfn "Starting window manager on platform: %A" manager.CurrentPlatform.Kind
-    printfn "Press Esc or click the close button to exit."
 
     manager.Run()
     0
