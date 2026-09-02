@@ -6,6 +6,7 @@ open Win32Platform
 open WindowTypes
 open Win32Types
 open System.Runtime.InteropServices
+open OpenGLTypes
 
 let private getHdcInWindow (window: Window) =
     match window.TryGetNativeHandle() with
@@ -54,6 +55,16 @@ let CreateContext (window: Window) =
 
     let pixelFormat = SetPixelFormat(hdc, pfd)
 
-    let hglrc = CreateOpenGLContext hdc
+    let hglrc = createOpenGLContext hdc
 
-    MakeCurrent hdc hglrc
+    makeCurrent hdc hglrc
+
+    let OpenGLContext: OpenGLContext =
+        { MakeCurrent = fun () -> makeCurrent hdc hglrc
+          SwapBuffers = fun () -> swapBuffers hdc
+          Dispose =
+            fun () ->
+                makeCurrent hdc hglrc
+                deleteOpenGLContext hglrc }
+
+    OpenGLContext

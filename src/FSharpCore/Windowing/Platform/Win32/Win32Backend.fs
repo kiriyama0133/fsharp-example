@@ -588,13 +588,13 @@ open System.Collections.Generic
             )
     let createOpenGLContext (hdc: HDC): HGLRC =
         let hglrc = wglCreateContext(hdc)
-
-        if hglrc = 0n then
-            raise (
-                Win32Exception(
-                    Marshal.GetLastWin32Error(),
-                    "wglCreateContext failed."
-                )
-            )
-
+        ensureNonZeroHandle hglrc "wglCreateContext"
         hglrc
+
+    let swapBuffers (hdc: nativeint) =
+        if not (SwapBuffers(hdc)) then
+            failwith "SwapBuffers failed."
+
+    let deleteOpenGLContext (hglrc: nativeint) =
+        if not (wglDeleteContext(hglrc)) then
+            failwith "wglDeleteContext failed."
