@@ -31,6 +31,9 @@
     <Compile Include="Windowing\WindowManager.fs" />
     <Compile Include="Graphics\Platform\OpenGL\Types.fs" />
     <Compile Include="Graphics\Platform\OpenGL\Context.fs" />
+    <Compile Include="Graphics\Platform\OpenGL\Resources.fs" />
+    <Compile Include="Graphics\Platform\OpenGL\Buffer.fs" />
+    <Compile Include="Graphics\Platform\OpenGL\Device.fs" />
     <Compile Include="Runtime\RuntimeTypes.fs" />
     <Compile Include="Runtime\RuntimeVNode.fs" />
     <Compile Include="Runtime\RuntimeScheduler.fs" />

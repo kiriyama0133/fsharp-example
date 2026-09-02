@@ -135,6 +135,15 @@ extern bool wglMakeCurrent(nativeint hdc, nativeint hglrc)
 [<DllImport("opengl32.dll", SetLastError = true)>]
 extern bool wglDeleteContext(nativeint hglrc)
 
+[<DllImport("opengl32.dll", SetLastError = true, CharSet = CharSet.Ansi)>]
+extern nativeint wglGetProcAddress(string lpszProc)
+
+[<DllImport("kernel32.dll", CharSet = CharSet.Ansi)>]
+extern nativeint GetProcAddress(nativeint hModule, string lpProcName)
+
+[<DllImport("kernel32.dll", CharSet = CharSet.Ansi)>]
+extern nativeint GetModuleHandle(string lpModuleName)
+
 [<DllImport("gdi32.dll", SetLastError = true)>]
 extern bool SwapBuffers(nativeint hdc)
 

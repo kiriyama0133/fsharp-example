@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "sA0fNiTQiKM=",
+  "dgSpecHash": "AS3+kGZI6M4=",
   "success": true,
   "projectFilePath": "F:\\fsharp\\src\\FSharpCore\\FSharpCore.fsproj",
   "expectedPackageFiles": [
-    "C:\\Users\\20742\\.nuget\\packages\\fsharp.core\\10.1.202\\fsharp.core.10.1.202.nupkg.sha512",
+    "C:\\Users\\20742\\.nuget\\packages\\fsharp.core\\10.1.301\\fsharp.core.10.1.301.nupkg.sha512",
     "C:\\Users\\20742\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\20742\\.nuget\\packages\\microsoft.dotnet.platformabstractions\\3.1.6\\microsoft.dotnet.platformabstractions.3.1.6.nupkg.sha512",
     "C:\\Users\\20742\\.nuget\\packages\\microsoft.extensions.dependencymodel\\9.0.9\\microsoft.extensions.dependencymodel.9.0.9.nupkg.sha512",

@@ -11,7 +11,7 @@
         "projectName": "FSharpCore",
         "projectPath": "F:\\fsharp\\src\\FSharpCore\\FSharpCore.fsproj",
         "packagesPath": "C:\\Users\\20742\\.nuget\\packages\\",
-        "outputPath": "F:\\fsharp\\artifacts\\obj\\FSharpCore\\",
+        "outputPath": "F:\\fsharp\\src\\..\\artifacts\\obj\\FSharpCore\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -27,7 +27,7 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
-          "C:\\Program Files\\dotnet\\sdk\\10.0.202\\FSharp\\library-packs": {},
+          "C:\\Program Files\\dotnet\\sdk\\10.0.301\\FSharp\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -42,7 +42,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net8.0-windows": {
@@ -52,7 +52,7 @@
             "FSharp.Core": {
               "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
               "target": "Package",
-              "version": "[10.1.202, )",
+              "version": "[10.1.301, )",
               "generatePathProperty": true
             },
             "Silk.NET.OpenGL": {
@@ -87,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -48,12 +48,32 @@ let private createPixelFormatDescriptor () : PIXELFORMATDESCRIPTOR =
       dwVisibleMask = 0u
       dwDamageMask = 0u }
 
+let private isInvalidProcAddress (address: nativeint) =
+    address = 0n
+    || address = nativeint 1
+    || address = nativeint 2
+    || address = nativeint 3
+    || address = nativeint -1
+
+let private getProcAddress (procName: string) =
+    let procAddress = Win32Native.wglGetProcAddress(procName)
+
+    if not (isInvalidProcAddress procAddress) then
+        procAddress
+    else
+        let moduleHandle = Win32Native.GetModuleHandle("opengl32.dll")
+
+        if moduleHandle = 0n then
+            failwith "GetModuleHandle(opengl32.dll) failed."
+
+        Win32Native.GetProcAddress(moduleHandle, procName)
+
 let CreateContext (window: Window) =
     let hdc = getHdcInWindow window
 
     let pfd = createPixelFormatDescriptor ()
 
-    let pixelFormat = SetPixelFormat(hdc, pfd)
+    SetPixelFormat(hdc, pfd) |> ignore
 
     let hglrc = createOpenGLContext hdc
 
@@ -61,10 +81,11 @@ let CreateContext (window: Window) =
 
     let OpenGLContext: OpenGLContext =
         { MakeCurrent = fun () -> makeCurrent hdc hglrc
+          GetProcAddress = fun procName -> getProcAddress procName
           SwapBuffers = fun () -> swapBuffers hdc
           Dispose =
             fun () ->
-                makeCurrent hdc hglrc
+                makeCurrent 0n 0n
                 deleteOpenGLContext hglrc }
 
     OpenGLContext

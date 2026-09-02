@@ -17,6 +17,6 @@
     <PkgSkiaSharp Condition=" '$(PkgSkiaSharp)' == '' ">C:\Users\20742\.nuget\packages\skiasharp\4.151.1</PkgSkiaSharp>
     <PkgSilk_NET_WGL Condition=" '$(PkgSilk_NET_WGL)' == '' ">C:\Users\20742\.nuget\packages\silk.net.wgl\2.23.0</PkgSilk_NET_WGL>
     <PkgSilk_NET_OpenGL Condition=" '$(PkgSilk_NET_OpenGL)' == '' ">C:\Users\20742\.nuget\packages\silk.net.opengl\2.23.0</PkgSilk_NET_OpenGL>
-    <PkgFSharp_Core Condition=" '$(PkgFSharp_Core)' == '' ">C:\Users\20742\.nuget\packages\fsharp.core\10.1.202</PkgFSharp_Core>
+    <PkgFSharp_Core Condition=" '$(PkgFSharp_Core)' == '' ">C:\Users\20742\.nuget\packages\fsharp.core\10.1.301</PkgFSharp_Core>
   </PropertyGroup>
 </Project>

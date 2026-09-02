@@ -8,7 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "FSharpCore/1.0.0": {
         "dependencies": {
-          "FSharp.Core": "10.1.202",
+          "FSharp.Core": "10.1.301",
           "Silk.NET.OpenGL": "2.23.0",
           "Silk.NET.WGL": "2.23.0",
           "SkiaSharp": "4.151.1"
@@ -17,11 +17,11 @@
           "FSharpCore.dll": {}
         }
       },
-      "FSharp.Core/10.1.202": {
+      "FSharp.Core/10.1.301": {
         "runtime": {
           "lib/netstandard2.1/FSharp.Core.dll": {
             "assemblyVersion": "10.1.0.0",
-            "fileVersion": "10.102.226.18118"
+            "fileVersion": "10.103.126.27133"
           }
         },
         "resources": {
@@ -229,12 +229,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "FSharp.Core/10.1.202": {
+    "FSharp.Core/10.1.301": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-AEGcKK+UJOEa+g7+Y5N/R+EtafmIuqufCDeRdWXoIko1/JQT4jr+zH2PnNHVC4gPB19/pmIpQiuAs01pH8Ao5Q==",
-      "path": "fsharp.core/10.1.202",
-      "hashPath": "fsharp.core.10.1.202.nupkg.sha512"
+      "sha512": "sha512-excLf2zM/qUB3WhRUfI0xvOOaPwcRAEdYT/BXe9eiTKySnWVuIKMQTf5+6ETy5nsb1dpLp1s2j2yAM/XcRgFMg==",
+      "path": "fsharp.core/10.1.301",
+      "hashPath": "fsharp.core.10.1.301.nupkg.sha512"
     },
     "Microsoft.DotNet.PlatformAbstractions/3.1.6": {
       "type": "package",

@@ -3,11 +3,11 @@
 open System
 
 type OpenGLContext =
-    {
-        MakeCurrent: unit -> unit
-        SwapBuffers: unit -> unit
-        Dispose: unit -> unit
-    }
+    { MakeCurrent: unit -> unit
+      GetProcAddress: string -> nativeint
+      SwapBuffers: unit -> unit
+      Dispose: unit -> unit }
+
 type PlatformKind =
     | Windows
     | Linux
